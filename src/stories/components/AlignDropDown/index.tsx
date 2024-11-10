@@ -18,7 +18,7 @@ import {
 
 type AlignDropDownProps = {
   editor: LexicalEditor;
-  disabled: boolean;
+  disabled?: boolean;
   elementFormat: ElementFormatType;
 }
 

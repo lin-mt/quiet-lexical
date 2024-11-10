@@ -15,6 +15,7 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   ElementFormatType,
+  FORMAT_TEXT_COMMAND,
   LexicalEditor,
   NodeKey,
   REDO_COMMAND,
@@ -27,14 +28,16 @@ import InsertDropDown from "../../components/InsertDropDown";
 import AlignDropDown from "../../components/AlignDropDown";
 import {$findMatchingParent, $getNearestNodeOfType, $isEditorIsNestedEditor, mergeRegister} from "@lexical/utils";
 import {$isTableSelection} from "@lexical/table";
-import {$isLinkNode} from "@lexical/link";
+import {$isLinkNode, TOGGLE_LINK_COMMAND} from "@lexical/link";
 import {$isListNode, ListNode} from "@lexical/list";
 import {$isHeadingNode} from "@lexical/rich-text";
 import {$isCodeNode, CODE_LANGUAGE_MAP} from "@lexical/code";
 import {$getSelectionStyleValueForProperty} from "@lexical/selection";
-import {getSelectedNode} from "../../utils/getSelectedNode";
 import {BlockTypeToBlockName} from "../../components/BlockTypeDropDown/constant";
 import LanguageCodeDropDown from "../../components/CodeLanguageDropDown";
+import {getActiveBgColor} from "../../utils/color.ts";
+import {sanitizeUrl} from "../../utils/url.ts";
+import {getSelectedNode} from "../../utils/getSelectedNode.ts";
 
 const LowPriority = 1;
 
@@ -44,6 +47,14 @@ type ToolbarPluginProps = {
   setActiveEditor: Dispatch<LexicalEditor>;
   setIsLinkEditMode: Dispatch<boolean>;
 }
+
+type Presets = Required<ColorPickerProps>['presets'][number];
+
+const genPresets = (presets = presetPalettes) =>
+  Object.entries(presets).map<Presets>(([label, colors]) => ({
+    label,
+    colors,
+  }));
 
 export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, setIsLinkEditMode}: ToolbarPluginProps) {
 
@@ -73,14 +84,6 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null,
   );
-
-  type Presets = Required<ColorPickerProps>['presets'][number];
-
-  const genPresets = (presets = presetPalettes) =>
-    Object.entries(presets).map<Presets>(([label, colors]) => ({
-      label,
-      colors,
-    }));
 
   const presets = genPresets({
     primary: generate(token.colorPrimary),
@@ -260,6 +263,21 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
     );
   }, [editor, $updateToolbar]);
 
+  const insertLink = useCallback(() => {
+    if (!isLink) {
+      setIsLinkEditMode(true);
+      activeEditor.dispatchCommand(
+        TOGGLE_LINK_COMMAND,
+        sanitizeUrl('https://'),
+      );
+    } else {
+      setIsLinkEditMode(false);
+      activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+    }
+  }, [activeEditor, isLink, setIsLinkEditMode]);
+
+  const canViewerSeeInsertDropdown = !isImageCaption;
+  const canViewerSeeInsertCodeButton = !isImageCaption;
 
   return (
     <Row className={'toolbar'} style={{borderBottomColor: token.colorBorder}}>
@@ -297,23 +315,43 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
           <ToolbarDivider/>
           <ToolbarButton
             tooltip={"加粗"}
+            style={getActiveBgColor(isBold, token)}
             icon={<Bold style={{strokeWidth: 2.6}}/>}
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
+            }}
           />
           <ToolbarButton
             tooltip={"斜体"}
+            style={getActiveBgColor(isItalic, token)}
             icon={<Italic/>}
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
+            }}
           />
           <ToolbarButton
             tooltip={"下划线"}
+            style={getActiveBgColor(isUnderline, token)}
             icon={<Underline/>}
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
+            }}
           />
-          <ToolbarButton
-            tooltip={"文本代码"}
-            icon={<Code/>}
-          />
+          {canViewerSeeInsertCodeButton && (
+            <ToolbarButton
+              tooltip={"文本代码"}
+              icon={<Code/>}
+              style={getActiveBgColor(isCode, token)}
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+              }}
+            />
+          )}
           <ToolbarButton
             tooltip={"链接"}
             icon={<Link/>}
+            style={getActiveBgColor(isLink, token)}
+            onClick={insertLink}
           />
           <ColorPicker
             defaultValue={token.colorPrimary}

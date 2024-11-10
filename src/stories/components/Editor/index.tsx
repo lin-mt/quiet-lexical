@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from "react";
+import React, {CSSProperties, useEffect, useState} from "react";
 import ToolbarPlugin from "../../plugins/ToolbarPlugin";
 import {theme} from "antd";
 
@@ -11,6 +11,9 @@ import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
 import {ListPlugin} from "@lexical/react/LexicalListPlugin";
 import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
 import CodeHighlightPlugin from "../../plugins/CodeHighlightPlugin";
+import FloatingLinkEditorPlugin from "../../plugins/FloatingLinkEditorPlugin";
+import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
+import {CAN_USE_DOM} from "@lexical/utils";
 
 type EditorProps = {
   placeholder?: string;
@@ -26,6 +29,23 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
   const [isSmallWidthViewport, setIsSmallWidthViewport] =
     useState<boolean>(false);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+
+  useEffect(() => {
+    const updateViewPortWidth = () => {
+      const isNextSmallWidthViewport =
+        CAN_USE_DOM && window.matchMedia('(max-width: 1025px)').matches;
+
+      if (isNextSmallWidthViewport !== isSmallWidthViewport) {
+        setIsSmallWidthViewport(isNextSmallWidthViewport);
+      }
+    };
+    updateViewPortWidth();
+    window.addEventListener('resize', updateViewPortWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateViewPortWidth);
+    };
+  }, [isSmallWidthViewport]);
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
@@ -68,7 +88,16 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
       <ListPlugin/>
       <CheckListPlugin/>
       <CodeHighlightPlugin/>
-
+      <LinkPlugin/>
+      {floatingAnchorElem && !isSmallWidthViewport && (
+        <>
+          <FloatingLinkEditorPlugin
+            anchorElem={floatingAnchorElem}
+            isLinkEditMode={isLinkEditMode}
+            setIsLinkEditMode={setIsLinkEditMode}
+          />
+        </>
+      )}
     </div>
   );
 };
