@@ -13,15 +13,17 @@ enum updateFontSizeType {
   decrement,
 }
 
+type FontSizeProps = {
+  selectionFontSize: string;
+  disabled?: boolean,
+  editor: LexicalEditor,
+}
+
 export default function FontSize({
                                    selectionFontSize,
                                    disabled,
                                    editor,
-                                 }: {
-  selectionFontSize: string;
-  disabled: boolean;
-  editor: LexicalEditor;
-}) {
+                                 }: FontSizeProps) {
   const [inputValue, setInputValue] = useState<string>(selectionFontSize);
   const [inputChangeFlag, setInputChangeFlag] = useState<boolean>(false);
 

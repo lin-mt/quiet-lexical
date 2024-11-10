@@ -1,5 +1,8 @@
 import {Button, Dropdown} from "antd";
 import {ChevronDown, Type} from "lucide-react";
+import {$getSelection, LexicalEditor} from "lexical";
+import {$patchStyleText} from "@lexical/selection";
+import {useCallback} from "react";
 
 const FONT_FAMILY_OPTIONS: [string, string][] = [
   ['宋体', '宋体'],
@@ -32,10 +35,28 @@ const FONT_SIZE_OPTIONS: [string, string][] = [
 ];
 
 type FontStyleDropDownProps = {
+  editor: LexicalEditor;
   style: 'font-family' | 'font-size';
+  value: string;
+  disabled?: boolean;
 }
 
-export default function FontStyleDropDown({style}: FontStyleDropDownProps) {
+export default function FontStyleDropDown({editor, style, value}: FontStyleDropDownProps) {
+
+  const handleClick = useCallback(
+    (option: string) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if (selection !== null) {
+          $patchStyleText(selection, {
+            [style]: option,
+          });
+        }
+      });
+    },
+    [editor, style],
+  );
+
   return (
     <Dropdown
       menu={{
@@ -44,12 +65,13 @@ export default function FontStyleDropDown({style}: FontStyleDropDownProps) {
             {
               key: option, label: text,
               style: style === 'font-family' ? {fontFamily: option} : {fontSize: option},
+              onClick: () => handleClick(option)
             }
           ),
         )
       }}
     >
-      <Button type={'text'} icon={<Type/>}>字体<ChevronDown/></Button>
+      <Button type={'text'} icon={<Type/>}>{value}<ChevronDown/></Button>
     </Dropdown>
   )
 }

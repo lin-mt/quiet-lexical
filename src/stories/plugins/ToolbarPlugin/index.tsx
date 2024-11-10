@@ -277,11 +277,11 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
         }}
       />
       <ToolbarDivider/>
-      <BlockTypeDropDown editor={editor} blockType={blockType}/>
+      <BlockTypeDropDown editor={activeEditor} blockType={blockType}/>
       <ToolbarDivider/>
-      <FontStyleDropDown style={'font-family'}/>
+      <FontStyleDropDown editor={activeEditor} value={fontFamily} style={'font-family'}/>
       <ToolbarDivider/>
-      <FontSize selectionFontSize={'15'} disabled={false} editor={editor}/>
+      <FontSize selectionFontSize={fontSize.slice(0, -2)} editor={activeEditor}/>
       <ToolbarDivider/>
       <ToolbarButton
         tooltip={"加粗"}
