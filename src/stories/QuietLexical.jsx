@@ -1,6 +1,7 @@
 import React from 'react';
 import {LexicalComposer} from "@lexical/react/LexicalComposer";
 import './QuietLexical.css'
+import Editor from "./components/Editor";
 
 export const QuietLexical = () => {
 
@@ -15,7 +16,7 @@ export const QuietLexical = () => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className={'quiet-lexical'}>
-        Quiet Lexical
+        <Editor editorConfig={editorConfig} />
       </div>
     </LexicalComposer>
   );

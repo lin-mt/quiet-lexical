@@ -1,0 +1,9 @@
+.toolbar {
+  padding: 6px;
+  gap: 3px;
+  border-bottom: 1px solid;
+}
+
+.toolbar .ant-divider {
+  margin-inline: 0;
+}
