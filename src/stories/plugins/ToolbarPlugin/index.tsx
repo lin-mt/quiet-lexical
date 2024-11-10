@@ -6,7 +6,7 @@ import './index.css'
 import BlockTypeDropDown from "../../components/BlockTypeDropDown";
 import FontStyleDropDown from "../../components/FontStyleDropDown";
 import FontSize from "../../components/FontSize";
-import {Dispatch, useCallback, useEffect, useRef, useState} from "react";
+import {Dispatch, useCallback, useEffect, useState} from "react";
 import {
   $getSelection,
   $isElementNode,
@@ -14,6 +14,7 @@ import {
   $isRootOrShadowRoot,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  COMMAND_PRIORITY_CRITICAL,
   ElementFormatType,
   FORMAT_TEXT_COMMAND,
   LexicalEditor,
@@ -32,7 +33,7 @@ import {$isLinkNode, TOGGLE_LINK_COMMAND} from "@lexical/link";
 import {$isListNode, ListNode} from "@lexical/list";
 import {$isHeadingNode} from "@lexical/rich-text";
 import {$isCodeNode, CODE_LANGUAGE_MAP} from "@lexical/code";
-import {$getSelectionStyleValueForProperty} from "@lexical/selection";
+import {$getSelectionStyleValueForProperty, $patchStyleText} from "@lexical/selection";
 import {BlockTypeToBlockName} from "../../components/BlockTypeDropDown/constant";
 import LanguageCodeDropDown from "../../components/CodeLanguageDropDown";
 import {getActiveBgColor} from "../../utils/color.ts";
@@ -59,7 +60,6 @@ const genPresets = (presets = presetPalettes) =>
 export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, setIsLinkEditMode}: ToolbarPluginProps) {
 
   const {token} = theme.useToken();
-  const toolbarRef = useRef(null);
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
   const [blockType, setBlockType] =
@@ -228,7 +228,6 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
     }
   }, [activeEditor, editor]);
 
-
   useEffect(() => {
     return mergeRegister(
       editor.registerUpdateListener(({editorState}) => {
@@ -263,6 +262,18 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
     );
   }, [editor, $updateToolbar]);
 
+  useEffect(() => {
+    return editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_payload, newEditor) => {
+        setActiveEditor(newEditor);
+        $updateToolbar();
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL,
+    );
+  }, [editor, $updateToolbar, setActiveEditor]);
+
   const insertLink = useCallback(() => {
     if (!isLink) {
       setIsLinkEditMode(true);
@@ -275,6 +286,35 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
       activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
     }
   }, [activeEditor, isLink, setIsLinkEditMode]);
+
+  const applyStyleText = useCallback(
+    (styles: Record<string, string>, skipHistoryStack?: boolean) => {
+      activeEditor.update(
+        () => {
+          const selection = $getSelection();
+          if (selection !== null) {
+            $patchStyleText(selection, styles);
+          }
+        },
+        skipHistoryStack ? {tag: 'historic'} : {},
+      );
+    },
+    [activeEditor],
+  );
+
+  const onFontColorSelect = useCallback(
+    (value: string) => {
+      applyStyleText({color: value});
+    },
+    [applyStyleText],
+  );
+
+  const onBgColorSelect = useCallback(
+    (value: string) => {
+      applyStyleText({'background-color': value});
+    },
+    [applyStyleText],
+  );
 
   const canViewerSeeInsertDropdown = !isImageCaption;
   const canViewerSeeInsertCodeButton = !isImageCaption;
@@ -354,20 +394,26 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
             onClick={insertLink}
           />
           <ColorPicker
-            defaultValue={token.colorPrimary}
+            value={fontColor}
             styles={{popupOverlayInner: {width: 396}}}
             presets={presets}
             panelRender={createCustomPanelRender("字体颜色")}
+            onChange={val => {
+              onFontColorSelect(val.toHexString())
+            }}
           >
             <Tooltip title={"字体颜色"}>
               <Button type={'text'} icon={<PencilLine/>}/>
             </Tooltip>
           </ColorPicker>
           <ColorPicker
-            defaultValue={token.colorPrimary}
+            value={bgColor}
             styles={{popupOverlayInner: {width: 396}}}
             presets={presets}
             panelRender={createCustomPanelRender("背景色")}
+            onChange={val => {
+              onBgColorSelect(val.toHexString())
+            }}
           >
             <Tooltip title={"背景色"}>
               <Button type={'text'} icon={<PaintBucket/>}/>
