@@ -2,6 +2,7 @@ import React from 'react';
 import {LexicalComposer} from "@lexical/react/LexicalComposer";
 import './QuietLexical.css'
 import Editor from "./components/Editor";
+import PlaygroundEditorTheme from "./themes/EditorTheme";
 
 export const QuietLexical = () => {
 
@@ -11,12 +12,13 @@ export const QuietLexical = () => {
     onError(error) {
       throw error;
     },
+    theme: PlaygroundEditorTheme,
   };
 
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className={'quiet-lexical'}>
-        <Editor editorConfig={editorConfig} />
+        <Editor editorConfig={editorConfig}/>
       </div>
     </LexicalComposer>
   );
