@@ -1,4 +1,4 @@
-import {Button, ColorPicker, ColorPickerProps, Row, theme, Tooltip} from "antd";
+import {Button, Col, ColorPicker, ColorPickerProps, Row, theme, Tooltip} from "antd";
 import {ToolbarButton, ToolbarDivider} from "../../components";
 import {Bold, Code, Italic, Link, PaintBucket, PencilLine, Redo2, Underline, Undo2} from "lucide-react";
 
@@ -48,14 +48,14 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
         {title && (
           <div style={{
             fontSize: 12,
-            color: 'rgba(0, 0, 0, 0.88)',
+            color: token.colorText,
             lineHeight: '20px',
             marginBottom: 8,
           }}>{title}</div>
         )}
         <Picker/>
       </Col>
-      <AntDivider type="vertical" style={{height: 'auto'}}/>
+      <ToolbarDivider/>
       <Col span={12}>
         <Presets/>
       </Col>
@@ -76,7 +76,7 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
       <ToolbarDivider/>
       <ToolbarButton
         tooltip={"加粗"}
-        icon={<Bold/>}
+        icon={<Bold style={{strokeWidth: 2.6}}/>}
       />
       <ToolbarButton
         tooltip={"斜体"}
@@ -96,7 +96,8 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
       />
       <ColorPicker
         defaultValue={token.colorPrimary}
-        styles={{popupOverlayInner: {width: 480}}}
+        styles={{popupOverlayInner: {width: 399}}}
+        presets={presets}
         panelRender={createCustomPanelRender("字体颜色")}
       >
         <Tooltip title={"字体颜色"}>
@@ -105,7 +106,7 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
       </ColorPicker>
       <ColorPicker
         defaultValue={token.colorPrimary}
-        styles={{popupOverlayInner: {width: 480}}}
+        styles={{popupOverlayInner: {width: 399}}}
         presets={presets}
         panelRender={createCustomPanelRender("背景色")}
       >
