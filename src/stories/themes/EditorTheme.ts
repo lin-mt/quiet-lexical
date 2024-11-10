@@ -89,7 +89,6 @@ const theme: EditorThemeClasses = {
   markOverlap: 'EditorTheme__markOverlap',
   paragraph: 'EditorTheme__paragraph',
   quote: 'EditorTheme__quote',
-  rtl: 'EditorTheme__rtl',
   table: 'EditorTheme__table',
   tableCell: 'EditorTheme__tableCell',
   tableCellActionButton: 'EditorTheme__tableCellActionButton',

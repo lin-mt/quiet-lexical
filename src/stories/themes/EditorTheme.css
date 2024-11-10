@@ -2,10 +2,6 @@
   text-align: left;
 }
 
-.EditorTheme__rtl {
-  text-align: right;
-}
-
 .EditorTheme__paragraph {
   margin: 0;
   position: relative;
@@ -123,12 +119,12 @@
 }
 
 .EditorTheme__code {
-  background-color: #fcfcfc;
+  background-color: rgb(249 249 249);
   font-family: SFMono-Regular, consolas, Liberation Mono, menlo, courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   display: block;
   padding: 8px 8px 8px 52px;
   line-height: 1.53;
-  font-size: 13px;
+  font-size: 14px;
   border-radius: 5px;
   border: 1px solid rgba(175, 175, 175, 0.15);
   margin: 8px 0;

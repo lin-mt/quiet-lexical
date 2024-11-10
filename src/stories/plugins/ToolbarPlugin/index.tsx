@@ -34,6 +34,7 @@ import {$isCodeNode, CODE_LANGUAGE_MAP} from "@lexical/code";
 import {$getSelectionStyleValueForProperty} from "@lexical/selection";
 import {getSelectedNode} from "../../utils/getSelectedNode";
 import {BlockTypeToBlockName} from "../../components/BlockTypeDropDown/constant";
+import LanguageCodeDropDown from "../../components/CodeLanguageDropDown";
 
 const LowPriority = 1;
 
@@ -104,7 +105,7 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
         <Picker/>
       </Col>
       <ToolbarDivider/>
-      <Col span={12}>
+      <Col flex={'144px'}>
         <Presets/>
       </Col>
     </Row>
@@ -277,57 +278,70 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
         }}
       />
       <ToolbarDivider/>
-      <BlockTypeDropDown editor={activeEditor} blockType={blockType}/>
+      {blockType in BlockTypeToBlockName && activeEditor === editor && (
+        <>
+          <BlockTypeDropDown editor={activeEditor} blockType={blockType}/>
+          <ToolbarDivider/>
+        </>
+      )}
+      {blockType === 'code' ?
+        <LanguageCodeDropDown
+          editor={activeEditor}
+          codeLanguage={codeLanguage}
+          selectedElementKey={selectedElementKey}
+        /> :
+        <>
+          <FontStyleDropDown editor={activeEditor} value={fontFamily} style={'font-family'}/>
+          <ToolbarDivider/>
+          <FontSize selectionFontSize={fontSize.slice(0, -2)} editor={activeEditor}/>
+          <ToolbarDivider/>
+          <ToolbarButton
+            tooltip={"加粗"}
+            icon={<Bold style={{strokeWidth: 2.6}}/>}
+          />
+          <ToolbarButton
+            tooltip={"斜体"}
+            icon={<Italic/>}
+          />
+          <ToolbarButton
+            tooltip={"下划线"}
+            icon={<Underline/>}
+          />
+          <ToolbarButton
+            tooltip={"文本代码"}
+            icon={<Code/>}
+          />
+          <ToolbarButton
+            tooltip={"链接"}
+            icon={<Link/>}
+          />
+          <ColorPicker
+            defaultValue={token.colorPrimary}
+            styles={{popupOverlayInner: {width: 396}}}
+            presets={presets}
+            panelRender={createCustomPanelRender("字体颜色")}
+          >
+            <Tooltip title={"字体颜色"}>
+              <Button type={'text'} icon={<PencilLine/>}/>
+            </Tooltip>
+          </ColorPicker>
+          <ColorPicker
+            defaultValue={token.colorPrimary}
+            styles={{popupOverlayInner: {width: 396}}}
+            presets={presets}
+            panelRender={createCustomPanelRender("背景色")}
+          >
+            <Tooltip title={"背景色"}>
+              <Button type={'text'} icon={<PaintBucket/>}/>
+            </Tooltip>
+          </ColorPicker>
+          <MarkDropDown/>
+          <ToolbarDivider/>
+          <InsertDropDown/>
+        </>
+      }
       <ToolbarDivider/>
-      <FontStyleDropDown editor={activeEditor} value={fontFamily} style={'font-family'}/>
-      <ToolbarDivider/>
-      <FontSize selectionFontSize={fontSize.slice(0, -2)} editor={activeEditor}/>
-      <ToolbarDivider/>
-      <ToolbarButton
-        tooltip={"加粗"}
-        icon={<Bold style={{strokeWidth: 2.6}}/>}
-      />
-      <ToolbarButton
-        tooltip={"斜体"}
-        icon={<Italic/>}
-      />
-      <ToolbarButton
-        tooltip={"下划线"}
-        icon={<Underline/>}
-      />
-      <ToolbarButton
-        tooltip={"文本代码"}
-        icon={<Code/>}
-      />
-      <ToolbarButton
-        tooltip={"链接"}
-        icon={<Link/>}
-      />
-      <ColorPicker
-        defaultValue={token.colorPrimary}
-        styles={{popupOverlayInner: {width: 399}}}
-        presets={presets}
-        panelRender={createCustomPanelRender("字体颜色")}
-      >
-        <Tooltip title={"字体颜色"}>
-          <Button type={'text'} icon={<PencilLine/>}/>
-        </Tooltip>
-      </ColorPicker>
-      <ColorPicker
-        defaultValue={token.colorPrimary}
-        styles={{popupOverlayInner: {width: 399}}}
-        presets={presets}
-        panelRender={createCustomPanelRender("背景色")}
-      >
-        <Tooltip title={"背景色"}>
-          <Button type={'text'} icon={<PaintBucket/>}/>
-        </Tooltip>
-      </ColorPicker>
-      <MarkDropDown/>
-      <ToolbarDivider/>
-      <InsertDropDown/>
-      <ToolbarDivider/>
-      <AlignDropDown editor={editor} disabled={false} elementFormat={elementFormat}/>
+      <AlignDropDown editor={editor} elementFormat={elementFormat}/>
     </Row>
   )
 }
