@@ -2,17 +2,18 @@ import React from 'react';
 import {LexicalComposer} from "@lexical/react/LexicalComposer";
 import './QuietLexical.css'
 import Editor from "./components/Editor";
-import PlaygroundEditorTheme from "./themes/EditorTheme";
+import EditorTheme from "./themes/EditorTheme";
+import EditorNodes from "./nodes/EditorNodes";
 
 export const QuietLexical = () => {
 
   const editorConfig = {
     namespace: 'QuietLexical',
-    nodes: [],
+    nodes: [...EditorNodes],
     onError(error) {
       throw error;
     },
-    theme: PlaygroundEditorTheme,
+    theme: EditorTheme,
   };
 
   return (

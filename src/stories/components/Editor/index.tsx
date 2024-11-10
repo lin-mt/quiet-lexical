@@ -7,6 +7,10 @@ import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
 import {LexicalErrorBoundary} from "@lexical/react/LexicalErrorBoundary";
 import {ContentEditable} from "@lexical/react/LexicalContentEditable";
+import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
+import {ListPlugin} from "@lexical/react/LexicalListPlugin";
+import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
+import CodeHighlightPlugin from "../../plugins/CodeHighlightPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -60,6 +64,11 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
         }
         ErrorBoundary={LexicalErrorBoundary}
       />
+      <HistoryPlugin/>
+      <ListPlugin/>
+      <CheckListPlugin/>
+      <CodeHighlightPlugin/>
+
     </div>
   );
 };

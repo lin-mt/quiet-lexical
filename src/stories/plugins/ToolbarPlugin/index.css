@@ -2,6 +2,7 @@
   padding: 6px;
   gap: 3px;
   border-bottom: 1px solid;
+  min-width: 1050px;
 }
 
 .toolbar .ant-divider {
