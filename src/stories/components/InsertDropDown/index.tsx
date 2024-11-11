@@ -4,7 +4,6 @@ import {ChevronDown, File, Image, Plus, Rows2, ScissorsLineDashed, Shapes, Sigma
 export default function InsertDropDown() {
   return (
     <Dropdown
-
       menu={{
         items: [{
           key: 'separator',

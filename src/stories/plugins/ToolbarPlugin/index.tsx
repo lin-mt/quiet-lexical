@@ -425,8 +425,12 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
             isSubscript={isSubscript}
             isSuperscript={isSuperscript}
           />
-          <ToolbarDivider/>
-          <InsertDropDown/>
+          {canViewerSeeInsertDropdown &&
+            <>
+              <ToolbarDivider/>
+              <InsertDropDown/>
+            </>
+          }
         </>
       }
       <ToolbarDivider/>
