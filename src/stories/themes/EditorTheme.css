@@ -232,6 +232,7 @@
   animation: table-controls 0.2s ease;
   border: 0;
   cursor: pointer;
+  padding: 0;
 }
 
 .EditorTheme__tableAddColumns:after {
@@ -239,7 +240,6 @@
   background-position: center;
   background-repeat: no-repeat;
   display: block;
-  content: ' ';
   position: absolute;
   top: 0;
   left: 0;
@@ -260,6 +260,7 @@
   animation: table-controls 0.2s ease;
   border: 0;
   cursor: pointer;
+  padding: 0;
 }
 
 .EditorTheme__tableAddRows:after {
@@ -267,7 +268,6 @@
   background-position: center;
   background-repeat: no-repeat;
   display: block;
-  content: ' ';
   position: absolute;
   top: 0;
   left: 0;

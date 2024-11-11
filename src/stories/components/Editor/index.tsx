@@ -18,6 +18,7 @@ import {HorizontalRulePlugin} from "@lexical/react/LexicalHorizontalRulePlugin";
 import PageBreakPlugin from "../../plugins/PageBreakPlugin";
 import {TablePlugin} from "@lexical/react/LexicalTablePlugin";
 import TableCellResizerPlugin from "../../plugins/TableCellResizer";
+import TableHoverActionsPlugin from "../../plugins/TableHoverActionsPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -97,6 +98,7 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
       <PageBreakPlugin/>
       <TablePlugin/>
       <TableCellResizerPlugin/>
+      <TableHoverActionsPlugin/>
       {floatingAnchorElem && !isSmallWidthViewport && (
         <>
           <FloatingLinkEditorPlugin
