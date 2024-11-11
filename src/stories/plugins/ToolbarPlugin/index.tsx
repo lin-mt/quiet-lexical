@@ -77,7 +77,6 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
   const [isSubscript, setIsSubscript] = useState(false);
   const [isSuperscript, setIsSuperscript] = useState(false);
 
-
   const [elementFormat, setElementFormat] = useState<ElementFormatType>('left');
   const [isImageCaption, setIsImageCaption] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState<string>('');
@@ -419,7 +418,13 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
               <Button type={'text'} icon={<PaintBucket/>}/>
             </Tooltip>
           </ColorPicker>
-          <MarkDropDown/>
+          <MarkDropDown
+            editor={editor}
+            activeEditor={activeEditor}
+            isStrikethrough={isStrikethrough}
+            isSubscript={isSubscript}
+            isSuperscript={isSuperscript}
+          />
           <ToolbarDivider/>
           <InsertDropDown/>
         </>
