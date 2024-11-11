@@ -19,6 +19,7 @@ import PageBreakPlugin from "../../plugins/PageBreakPlugin";
 import {TablePlugin} from "@lexical/react/LexicalTablePlugin";
 import TableCellResizerPlugin from "../../plugins/TableCellResizer";
 import TableHoverActionsPlugin from "../../plugins/TableHoverActionsPlugin";
+import FloatingTextFormatToolbarPlugin from "../../plugins/FloatingTextFormatToolbarPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -104,6 +105,10 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
           <FloatingLinkEditorPlugin
             anchorElem={floatingAnchorElem}
             isLinkEditMode={isLinkEditMode}
+            setIsLinkEditMode={setIsLinkEditMode}
+          />
+          <FloatingTextFormatToolbarPlugin
+            anchorElem={floatingAnchorElem}
             setIsLinkEditMode={setIsLinkEditMode}
           />
         </>
