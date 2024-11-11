@@ -2,6 +2,7 @@ import {Button, Dropdown} from "antd";
 import {ChevronDown, File, Image, Plus, Rows2, ScissorsLineDashed, Shapes, Sigma, Table} from "lucide-react";
 import {LexicalEditor} from "lexical";
 import {INSERT_HORIZONTAL_RULE_COMMAND} from "@lexical/react/LexicalHorizontalRuleNode";
+import {INSERT_PAGE_BREAK} from "../../plugins/PageBreakPlugin";
 
 type InsertDropDownProps = {
   activeEditor: LexicalEditor;
@@ -25,6 +26,12 @@ export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
           key: 'scissors',
           icon: <ScissorsLineDashed/>,
           label: '分页线',
+          onClick: () => {
+            activeEditor.dispatchCommand(
+              INSERT_PAGE_BREAK,
+              undefined,
+            );
+          }
         }, {
           key: 'table',
           icon: <Table/>,

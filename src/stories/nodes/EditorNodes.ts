@@ -4,6 +4,7 @@ import {ListItemNode, ListNode} from "@lexical/list";
 import {CodeHighlightNode, CodeNode} from "@lexical/code";
 import {AutoLinkNode, LinkNode} from "@lexical/link";
 import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
+import {PageBreakNode} from "./PageBreakNode";
 
 const EditorNodes: Array<Klass<LexicalNode>> = [
   HeadingNode,
@@ -14,7 +15,8 @@ const EditorNodes: Array<Klass<LexicalNode>> = [
   QuoteNode,
   LinkNode,
   AutoLinkNode,
-  HorizontalRuleNode
+  HorizontalRuleNode,
+  PageBreakNode
 ]
 
 export default EditorNodes;

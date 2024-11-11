@@ -15,6 +15,7 @@ import FloatingLinkEditorPlugin from "../../plugins/FloatingLinkEditorPlugin";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import {CAN_USE_DOM} from "@lexical/utils";
 import {HorizontalRulePlugin} from "@lexical/react/LexicalHorizontalRulePlugin";
+import PageBreakPlugin from "../../plugins/PageBreakPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -91,6 +92,7 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
       <CodeHighlightPlugin/>
       <LinkPlugin/>
       <HorizontalRulePlugin />
+      <PageBreakPlugin />
       {floatingAnchorElem && !isSmallWidthViewport && (
         <>
           <FloatingLinkEditorPlugin
