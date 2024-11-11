@@ -20,8 +20,6 @@ import {
 } from 'lexical';
 import React, {useCallback, useEffect} from 'react';
 
-export type SerializedPageBreakNode = SerializedLexicalNode;
-
 function PageBreakComponent({nodeKey}: { nodeKey: NodeKey }) {
   const [editor] = useLexicalComposerContext();
   const [isSelected, setSelected, clearSelection] =
