@@ -428,7 +428,7 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
           {canViewerSeeInsertDropdown &&
             <>
               <ToolbarDivider/>
-              <InsertDropDown/>
+              <InsertDropDown activeEditor={activeEditor}/>
             </>
           }
         </>

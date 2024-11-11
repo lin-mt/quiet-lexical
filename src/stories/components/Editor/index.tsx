@@ -14,6 +14,7 @@ import CodeHighlightPlugin from "../../plugins/CodeHighlightPlugin";
 import FloatingLinkEditorPlugin from "../../plugins/FloatingLinkEditorPlugin";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import {CAN_USE_DOM} from "@lexical/utils";
+import {HorizontalRulePlugin} from "@lexical/react/LexicalHorizontalRulePlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -89,6 +90,7 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
       <CheckListPlugin/>
       <CodeHighlightPlugin/>
       <LinkPlugin/>
+      <HorizontalRulePlugin />
       {floatingAnchorElem && !isSmallWidthViewport && (
         <>
           <FloatingLinkEditorPlugin

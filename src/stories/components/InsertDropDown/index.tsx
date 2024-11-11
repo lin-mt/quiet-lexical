@@ -1,7 +1,13 @@
 import {Button, Dropdown} from "antd";
 import {ChevronDown, File, Image, Plus, Rows2, ScissorsLineDashed, Shapes, Sigma, Table} from "lucide-react";
+import {LexicalEditor} from "lexical";
+import {INSERT_HORIZONTAL_RULE_COMMAND} from "@lexical/react/LexicalHorizontalRuleNode";
 
-export default function InsertDropDown() {
+type InsertDropDownProps = {
+  activeEditor: LexicalEditor;
+}
+
+export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
   return (
     <Dropdown
       menu={{
@@ -9,6 +15,12 @@ export default function InsertDropDown() {
           key: 'separator',
           icon: <Rows2/>,
           label: '分割线',
+          onClick: () => {
+            activeEditor.dispatchCommand(
+              INSERT_HORIZONTAL_RULE_COMMAND,
+              undefined,
+            );
+          }
         }, {
           key: 'scissors',
           icon: <ScissorsLineDashed/>,

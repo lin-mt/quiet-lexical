@@ -3,6 +3,7 @@ import {Klass, LexicalNode} from "lexical";
 import {ListItemNode, ListNode} from "@lexical/list";
 import {CodeHighlightNode, CodeNode} from "@lexical/code";
 import {AutoLinkNode, LinkNode} from "@lexical/link";
+import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
 
 const EditorNodes: Array<Klass<LexicalNode>> = [
   HeadingNode,
@@ -13,6 +14,7 @@ const EditorNodes: Array<Klass<LexicalNode>> = [
   QuoteNode,
   LinkNode,
   AutoLinkNode,
+  HorizontalRuleNode
 ]
 
 export default EditorNodes;
