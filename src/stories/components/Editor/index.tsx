@@ -20,6 +20,11 @@ import {TablePlugin} from "@lexical/react/LexicalTablePlugin";
 import TableCellResizerPlugin from "../../plugins/TableCellResizer";
 import TableHoverActionsPlugin from "../../plugins/TableHoverActionsPlugin";
 import FloatingTextFormatToolbarPlugin from "../../plugins/FloatingTextFormatToolbarPlugin";
+import LexicalAutoLinkPlugin from "../../plugins/LexicalAutoLinkPlugin";
+import ListMaxIndentLevelPlugin from "../../plugins/ListMaxIndentLevelPlugin";
+import {TabIndentationPlugin} from "@lexical/react/LexicalTabIndentationPlugin";
+import {HashtagPlugin} from "@lexical/react/LexicalHashtagPlugin";
+import {AutoFocusPlugin} from "@lexical/react/LexicalAutoFocusPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -113,6 +118,11 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
           />
         </>
       )}
+      <AutoFocusPlugin/>
+      <HashtagPlugin/>
+      <LexicalAutoLinkPlugin/>
+      <TabIndentationPlugin/>
+      <ListMaxIndentLevelPlugin/>
     </div>
   );
 };
