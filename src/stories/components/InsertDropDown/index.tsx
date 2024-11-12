@@ -69,7 +69,7 @@ export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
       <InsertTableModal
         activeEditor={activeEditor}
         visible={tableModelOpen}
-        onCancle={() => setTableModelOpen(false)}
+        onCancel={() => setTableModelOpen(false)}
         onOk={() => setTableModelOpen(false)}
       />
     </>

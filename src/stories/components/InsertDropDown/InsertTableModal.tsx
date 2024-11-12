@@ -6,11 +6,11 @@ import {INSERT_TABLE_COMMAND} from "@lexical/table";
 type InsertTableModalProps = {
   activeEditor: LexicalEditor;
   visible: boolean;
-  onCancle: () => void;
+  onCancel: () => void;
   onOk: () => void;
 }
 
-export default function InsertTableModal({activeEditor, visible, onCancle, onOk}: InsertTableModalProps) {
+export default function InsertTableModal({activeEditor, visible, onCancel, onOk}: InsertTableModalProps) {
 
   const [form] = Form.useForm();
 
@@ -21,7 +21,7 @@ export default function InsertTableModal({activeEditor, visible, onCancle, onOk}
       open={visible}
       width={260}
       afterClose={() => form.resetFields()}
-      onCancel={onCancle}
+      onCancel={onCancel}
       onOk={() => {
         form.validateFields()
           .then(values => {
