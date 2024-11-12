@@ -97,7 +97,7 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
       <LinkPlugin/>
       <HorizontalRulePlugin/>
       <PageBreakPlugin/>
-      <TablePlugin/>
+      <TablePlugin hasCellMerge={true} hasCellBackgroundColor={true}/>
       <TableCellResizerPlugin/>
       <TableHoverActionsPlugin/>
       {floatingAnchorElem && !isSmallWidthViewport && (
