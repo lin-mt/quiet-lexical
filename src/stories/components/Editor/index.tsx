@@ -20,6 +20,7 @@ import {TablePlugin} from "@lexical/react/LexicalTablePlugin";
 import TableCellResizerPlugin from "../../plugins/TableCellResizer";
 import TableHoverActionsPlugin from "../../plugins/TableHoverActionsPlugin";
 import FloatingTextFormatToolbarPlugin from "../../plugins/FloatingTextFormatToolbarPlugin";
+import DraggableBlockPlugin from "../../plugins/DraggableBlockPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -102,6 +103,7 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
       <TableHoverActionsPlugin/>
       {floatingAnchorElem && !isSmallWidthViewport && (
         <>
+          <DraggableBlockPlugin anchorElem={floatingAnchorElem}/>
           <FloatingLinkEditorPlugin
             anchorElem={floatingAnchorElem}
             isLinkEditMode={isLinkEditMode}
