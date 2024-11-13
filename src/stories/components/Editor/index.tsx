@@ -25,12 +25,14 @@ import ListMaxIndentLevelPlugin from "../../plugins/ListMaxIndentLevelPlugin";
 import {TabIndentationPlugin} from "@lexical/react/LexicalTabIndentationPlugin";
 import {HashtagPlugin} from "@lexical/react/LexicalHashtagPlugin";
 import {AutoFocusPlugin} from "@lexical/react/LexicalAutoFocusPlugin";
+import {MaxLengthPlugin} from "../../plugins/MaxLengthPlugin";
 
 type EditorProps = {
   placeholder?: string;
+  maxLength?: number;
 }
 
-export default function Editor({placeholder = '请输入内容...'}: EditorProps): React.JSX.Element {
+export default function Editor({placeholder = '请输入内容...', maxLength}: EditorProps): React.JSX.Element {
 
   const {token} = theme.useToken()
   const [editor] = useLexicalComposerContext();
@@ -118,6 +120,7 @@ export default function Editor({placeholder = '请输入内容...'}: EditorProps
           />
         </>
       )}
+      {maxLength && <MaxLengthPlugin maxLength={maxLength}/>}
       <AutoFocusPlugin/>
       <HashtagPlugin/>
       <LexicalAutoLinkPlugin/>
