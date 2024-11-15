@@ -26,6 +26,7 @@ import {TabIndentationPlugin} from "@lexical/react/LexicalTabIndentationPlugin";
 import {HashtagPlugin} from "@lexical/react/LexicalHashtagPlugin";
 import {AutoFocusPlugin} from "@lexical/react/LexicalAutoFocusPlugin";
 import {MaxLengthPlugin} from "../../plugins/MaxLengthPlugin";
+import DraggableBlockPlugin from "../../plugins/DraggableBlockPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -109,6 +110,7 @@ export default function Editor({placeholder = '请输入内容...', maxLength}: 
       <TableHoverActionsPlugin/>
       {floatingAnchorElem && !isSmallWidthViewport && (
         <>
+          <DraggableBlockPlugin anchorElem={floatingAnchorElem}/>
           <FloatingLinkEditorPlugin
             anchorElem={floatingAnchorElem}
             isLinkEditMode={isLinkEditMode}

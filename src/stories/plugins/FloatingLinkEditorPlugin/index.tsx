@@ -285,7 +285,7 @@ function useFloatingLinkEditorToolbar(
   anchorElem: HTMLElement,
   isLinkEditMode: boolean,
   setIsLinkEditMode: Dispatch<boolean>,
-): JSX.Element | null {
+): React.JSX.Element | null {
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLink, setIsLink] = useState(false);
 
