@@ -185,8 +185,10 @@ function setMenuPosition(
   const floatingElemRect = floatingElem.getBoundingClientRect();
   const anchorElementRect = anchorElem.getBoundingClientRect();
 
+  // top left
   let lineHeight: number = parseInt(targetStyle.lineHeight, 10);
   if (isNaN(lineHeight)) {
+    // middle
     lineHeight = targetRect.bottom - targetRect.top;
   }
   const top =

@@ -1,10 +1,24 @@
 import {Button, Dropdown} from "antd";
-import {ChevronDown, File, Image, Plus, Rows2, ScissorsLineDashed, Shapes, Sigma, Table} from "lucide-react";
+import {
+  ChevronDown,
+  File,
+  Image,
+  ImagePlus,
+  ImageUp,
+  Plus,
+  Rows2,
+  ScissorsLineDashed,
+  Shapes,
+  Sigma,
+  Table
+} from "lucide-react";
 import {LexicalEditor} from "lexical";
 import {INSERT_HORIZONTAL_RULE_COMMAND} from "@lexical/react/LexicalHorizontalRuleNode";
 import {INSERT_PAGE_BREAK} from "../../plugins/PageBreakPlugin";
 import {useState} from "react";
 import InsertTableModal from "./InsertTableModal.tsx";
+import {InsertOnlineImageModal} from "./InsertImageModal.tsx";
+import {UploadLocalImageModal} from "./UploadLocalImageModal.tsx";
 
 type InsertDropDownProps = {
   activeEditor: LexicalEditor;
@@ -13,6 +27,8 @@ type InsertDropDownProps = {
 export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
 
   const [tableModelOpen, setTableModelOpen] = useState<boolean>(false);
+  const [insertOnlineModelOpen, setInsertOnlineModelOpen] = useState<boolean>(false);
+  const [uploadLocalImageModelOpen, setUploadLocalImageModelOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -47,6 +63,20 @@ export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
             key: 'image',
             icon: <Image/>,
             label: '图片',
+            children: [
+              {
+                key: 'online',
+                icon: <ImagePlus/>,
+                label: '在线图片',
+                onClick: () => setInsertOnlineModelOpen(true)
+              },
+              {
+                key: 'local',
+                icon: <ImageUp/>,
+                label: '本地图片',
+                onClick: () => setUploadLocalImageModelOpen(true)
+              }
+            ]
           }, {
             key: 'file',
             icon: <File/>,
@@ -71,6 +101,18 @@ export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
         visible={tableModelOpen}
         onCancel={() => setTableModelOpen(false)}
         onOk={() => setTableModelOpen(false)}
+      />
+      <InsertOnlineImageModal
+        activeEditor={activeEditor}
+        visible={insertOnlineModelOpen}
+        onCancel={() => setInsertOnlineModelOpen(false)}
+        onOk={() => setInsertOnlineModelOpen(false)}
+      />
+      <UploadLocalImageModal
+        activeEditor={activeEditor}
+        visible={uploadLocalImageModelOpen}
+        onCancel={() => setUploadLocalImageModelOpen(false)}
+        onOk={() => setUploadLocalImageModelOpen(false)}
       />
     </>
   )

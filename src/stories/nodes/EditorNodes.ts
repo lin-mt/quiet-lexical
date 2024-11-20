@@ -7,6 +7,7 @@ import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
 import {PageBreakNode} from "./PageBreakNode";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
 import {HashtagNode} from "@lexical/hashtag";
+import {ImageNode} from "./ImageNode";
 
 const EditorNodes: Array<Klass<LexicalNode>> = [
   HeadingNode,
@@ -20,6 +21,7 @@ const EditorNodes: Array<Klass<LexicalNode>> = [
   HorizontalRuleNode,
   PageBreakNode,
   TableNode, TableCellNode, TableRowNode,
+  ImageNode,
   HashtagNode
 ]
 

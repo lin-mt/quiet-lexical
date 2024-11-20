@@ -27,6 +27,7 @@ import {HashtagPlugin} from "@lexical/react/LexicalHashtagPlugin";
 import {AutoFocusPlugin} from "@lexical/react/LexicalAutoFocusPlugin";
 import {MaxLengthPlugin} from "../../plugins/MaxLengthPlugin";
 import DraggableBlockPlugin from "../../plugins/DraggableBlockPlugin";
+import ImagesPlugin from "../../plugins/ImagesPlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -127,6 +128,7 @@ export default function Editor({placeholder = '请输入内容...', maxLength}: 
       <HashtagPlugin/>
       <LexicalAutoLinkPlugin/>
       <TabIndentationPlugin/>
+      <ImagesPlugin/>
       <ListMaxIndentLevelPlugin/>
     </div>
   );

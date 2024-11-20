@@ -19,7 +19,7 @@ export const QuietLexical = () => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className={'quiet-lexical'}>
-        <Editor editorConfig={editorConfig}/>
+        <Editor/>
       </div>
     </LexicalComposer>
   );

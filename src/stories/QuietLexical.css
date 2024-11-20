@@ -1,3 +1,155 @@
 .quiet-lexical {
   width: 1100px;
 }
+
+.editor-image {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.quiet-lexical .editor-image .image-edit-button {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  vertical-align: -0.25em;
+  position: absolute;
+  padding: 5px;
+  right: -33px;
+  top: 9px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.quiet-lexical .editor-image .image-edit-button:hover {
+  background-color: rgba(60, 132, 244, 0.1);
+}
+
+.quiet-lexical span.editor-image {
+  cursor: default;
+  display: inline-block;
+  position: relative;
+  user-select: none;
+}
+
+.quiet-lexical .editor-image img {
+  max-width: 100%;
+  cursor: default;
+}
+
+.quiet-lexical .editor-image img.focused {
+  outline: 2px solid rgb(60, 132, 244);
+  user-select: none;
+}
+
+.quiet-lexical .editor-image img.focused.draggable {
+  cursor: grab;
+}
+
+.quiet-lexical .editor-image img.focused.draggable:active {
+  cursor: grabbing;
+}
+
+.quiet-lexical .editor-image .image-caption-button {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  width: 30%;
+  padding: 10px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  min-width: 100px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.quiet-lexical .editor-image .image-caption-button:hover {
+  background-color: rgba(60, 132, 244, 0.5);
+}
+
+.quiet-lexical .editor-image .image-resizer {
+  display: block;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  background-color: rgb(60, 132, 244);
+  border: 1px solid #fff;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-n {
+  top: -6px;
+  left: 48%;
+  cursor: n-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-ne {
+  top: -6px;
+  right: -6px;
+  cursor: ne-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-e {
+  bottom: 48%;
+  right: -6px;
+  cursor: e-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-se {
+  bottom: -2px;
+  right: -6px;
+  cursor: nwse-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-s {
+  bottom: -2px;
+  left: 48%;
+  cursor: s-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-sw {
+  bottom: -2px;
+  left: -6px;
+  cursor: sw-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-w {
+  bottom: 48%;
+  left: -6px;
+  cursor: w-resize;
+}
+
+.quiet-lexical .editor-image .image-resizer.image-resizer-nw {
+  top: -6px;
+  left: -6px;
+  cursor: nw-resize;
+}
+
+.quiet-lexical .editor-image .image-caption-container .tree-view-output {
+  margin: 0;
+  border-radius: 0;
+}
+
+.quiet-lexical .editor-image .image-caption-container {
+  display: block;
+  position: absolute;
+  bottom: 4px;
+  left: 5px;
+  right: 5px;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #fff;
+  background-color: rgba(255, 255, 255, 0.9);
+  min-width: 100px;
+  color: #000;
+  overflow: hidden;
+}
+
+.quiet-lexical .editor-image .image-caption-button:hover {
+  background-color: rgba(60, 132, 244, 0.5);
+}
