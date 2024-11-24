@@ -1,6 +1,6 @@
 import React, {CSSProperties, useEffect, useState} from "react";
 import ToolbarPlugin from "../../plugins/ToolbarPlugin";
-import {theme} from "antd";
+import {theme, UploadFile} from "antd";
 
 import './index.css'
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
@@ -32,9 +32,14 @@ import ImagesPlugin from "../../plugins/ImagesPlugin";
 type EditorProps = {
   placeholder?: string;
   maxLength?: number;
+  uploadImage?: (image: UploadFile[]) => Promise<string[]>;
 }
 
-export default function Editor({placeholder = '请输入内容...', maxLength}: EditorProps): React.JSX.Element {
+export default function Editor({
+                                 placeholder = '请输入内容...',
+                                 maxLength,
+                                 uploadImage
+                               }: EditorProps): React.JSX.Element {
 
   const {token} = theme.useToken()
   const [editor] = useLexicalComposerContext();
@@ -80,7 +85,9 @@ export default function Editor({placeholder = '请输入内容...', maxLength}: 
         editor={editor}
         activeEditor={activeEditor}
         setActiveEditor={setActiveEditor}
-        setIsLinkEditMode={setIsLinkEditMode}/>
+        setIsLinkEditMode={setIsLinkEditMode}
+        uploadImage={uploadImage}
+      />
       <RichTextPlugin
         contentEditable={
           <div className="editor-scroller">

@@ -1,4 +1,4 @@
-import {Button, Col, ColorPicker, ColorPickerProps, Row, theme, Tooltip} from "antd";
+import {Button, Col, ColorPicker, ColorPickerProps, Row, theme, Tooltip, UploadFile} from "antd";
 import {ToolbarButton, ToolbarDivider} from "../../components";
 import {Bold, Code, Italic, Link, PaintBucket, PencilLine, Redo2, Underline, Undo2} from "lucide-react";
 
@@ -47,6 +47,7 @@ type ToolbarPluginProps = {
   activeEditor: LexicalEditor;
   setActiveEditor: Dispatch<LexicalEditor>;
   setIsLinkEditMode: Dispatch<boolean>;
+  uploadImage?: (image: UploadFile[]) => Promise<string[]>;
 }
 
 type Presets = Required<ColorPickerProps>['presets'][number];
@@ -57,7 +58,13 @@ const genPresets = (presets = presetPalettes) =>
     colors,
   }));
 
-export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, setIsLinkEditMode}: ToolbarPluginProps) {
+export default function ToolbarPlugin({
+                                        editor,
+                                        activeEditor,
+                                        setActiveEditor,
+                                        setIsLinkEditMode,
+                                        uploadImage
+                                      }: ToolbarPluginProps) {
 
   const {token} = theme.useToken();
   const [canUndo, setCanUndo] = useState(false);
@@ -428,7 +435,7 @@ export default function ToolbarPlugin({editor, activeEditor, setActiveEditor, se
           {canViewerSeeInsertDropdown &&
             <>
               <ToolbarDivider/>
-              <InsertDropDown activeEditor={activeEditor}/>
+              <InsertDropDown activeEditor={activeEditor} uploadImage={uploadImage}/>
             </>
           }
         </>

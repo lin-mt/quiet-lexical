@@ -1,4 +1,4 @@
-import {Button, Dropdown} from "antd";
+import {Button, Dropdown, UploadFile} from "antd";
 import {
   ChevronDown,
   File,
@@ -22,9 +22,10 @@ import {UploadLocalImageModal} from "./UploadLocalImageModal.tsx";
 
 type InsertDropDownProps = {
   activeEditor: LexicalEditor;
+  uploadImage?: (image: UploadFile[]) => Promise<string[]>;
 }
 
-export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
+export default function InsertDropDown({activeEditor, uploadImage}: InsertDropDownProps) {
 
   const [tableModelOpen, setTableModelOpen] = useState<boolean>(false);
   const [insertOnlineModelOpen, setInsertOnlineModelOpen] = useState<boolean>(false);
@@ -74,6 +75,7 @@ export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
                 key: 'local',
                 icon: <ImageUp/>,
                 label: '本地图片',
+                disabled: !uploadImage,
                 onClick: () => setUploadLocalImageModelOpen(true)
               }
             ]
@@ -108,12 +110,13 @@ export default function InsertDropDown({activeEditor}: InsertDropDownProps) {
         onCancel={() => setInsertOnlineModelOpen(false)}
         onOk={() => setInsertOnlineModelOpen(false)}
       />
-      <UploadLocalImageModal
+      {uploadImage && <UploadLocalImageModal
         activeEditor={activeEditor}
         visible={uploadLocalImageModelOpen}
         onCancel={() => setUploadLocalImageModelOpen(false)}
         onOk={() => setUploadLocalImageModelOpen(false)}
-      />
+        uploadImage={uploadImage}
+      />}
     </>
   )
 }

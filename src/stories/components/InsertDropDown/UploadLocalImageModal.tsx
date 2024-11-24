@@ -1,5 +1,5 @@
 import {LexicalEditor} from "lexical";
-import {Button, Form, GetProp, Input, Modal, Upload, UploadFile, UploadProps} from "antd";
+import {Button, Form, Input, message, Modal, Upload, UploadFile, UploadProps} from "antd";
 import {Upload as UploadIcon} from "lucide-react"
 import {INSERT_IMAGE_COMMAND} from "../../plugins/ImagesPlugin";
 import {useState} from "react";
@@ -10,47 +10,46 @@ type UploadLocalImageModalProps = {
   visible: boolean;
   onCancel: () => void;
   onOk: () => void;
+  uploadImage: (image: UploadFile[]) => Promise<string[]>;
 }
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
-
-export function UploadLocalImageModal({activeEditor, visible, onCancel, onOk}: UploadLocalImageModalProps) {
-
+export function UploadLocalImageModal({
+                                        activeEditor,
+                                        visible,
+                                        onCancel,
+                                        onOk,
+                                        uploadImage
+                                      }: UploadLocalImageModalProps) {
+  const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
 
   const handleUpload = () => {
-    // TODO 自己处理图片上传逻辑
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append('files[]', file as FileType);
-    });
+    if (fileList.length < 1) {
+      messageApi.warning("请选择上传的文件");
+      return;
+    }
     setUploading(true);
-    fetch('https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setFileList([]);
+    uploadImage(fileList).then((resps) => {
+      setFileList([]);
+      resps.forEach((src) => {
         form.validateFields()
           .then(values => {
             activeEditor.dispatchCommand(
               INSERT_IMAGE_COMMAND,
               {
                 ...values,
+                src,
                 showCaption: !!values.caption,
               }
             );
             onOk();
           })
       })
-      .catch(() => {
-      })
-      .finally(() => {
-        setUploading(false);
-      });
+    }).finally(() => {
+      setUploading(false);
+    })
   };
 
   const props: UploadProps = {
@@ -68,36 +67,39 @@ export function UploadLocalImageModal({activeEditor, visible, onCancel, onOk}: U
   };
 
   return (
-    <Modal
-      centered={true}
-      title={"上传本地图片"}
-      open={visible}
-      width={500}
-      afterClose={() => form.resetFields()}
-      onCancel={onCancel}
-      loading={uploading}
-      onOk={handleUpload}
-    >
-      <Form
-        form={form}
-        name="insertOnlineImage"
-        style={{marginTop: 20}}
-        labelCol={{span: 5}}
+    <>
+      {contextHolder}
+      <Modal
+        centered={true}
+        title={"上传本地图片"}
+        open={visible}
+        width={500}
+        afterClose={() => form.resetFields()}
+        onCancel={onCancel}
+        loading={uploading}
+        onOk={handleUpload}
       >
-        <Form.Item
-          label={'本地文件'}
+        <Form
+          form={form}
+          name="insertOnlineImage"
+          style={{marginTop: 20}}
+          labelCol={{span: 5}}
         >
-          <Upload {...props}>
-            <Button icon={<UploadIcon/>}>选择文件</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item
-          label={'图片说明'}
-          name="caption"
-        >
-          <Input placeholder="请输入图片说明"/>
-        </Form.Item>
-      </Form>
-    </Modal>
+          <Form.Item
+            label={'本地文件'}
+          >
+            <Upload {...props}>
+              <Button icon={<UploadIcon/>}>选择文件</Button>
+            </Upload>
+          </Form.Item>
+          <Form.Item
+            label={'图片说明'}
+            name="caption"
+          >
+            <Input placeholder="请输入图片说明"/>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 }
