@@ -19,6 +19,7 @@ import {useState} from "react";
 import InsertTableModal from "./InsertTableModal.tsx";
 import {InsertOnlineImageModal} from "./InsertImageModal.tsx";
 import {UploadLocalImageModal} from "./UploadLocalImageModal.tsx";
+import {INSERT_FILE_COMMAND} from "../../plugins/FilePlugin";
 
 type InsertDropDownProps = {
   activeEditor: LexicalEditor;
@@ -83,6 +84,15 @@ export default function InsertDropDown({activeEditor, uploadImage}: InsertDropDo
             key: 'file',
             icon: <File/>,
             label: '文件',
+            onClick: () => {
+              activeEditor.dispatchCommand(
+                INSERT_FILE_COMMAND,
+                {
+                  href: 'https://images.pexels.com/photos/28821822/pexels-photo-28821822.jpeg',
+                  fileName: '风景图片文件',
+                }
+              );
+            }
           }, {
             key: 'equation',
             icon: <Sigma/>,

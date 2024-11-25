@@ -8,6 +8,7 @@ import {PageBreakNode} from "./PageBreakNode";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
 import {HashtagNode} from "@lexical/hashtag";
 import {ImageNode} from "./ImageNode";
+import {FileNode} from "./FileNode";
 
 const EditorNodes: Array<Klass<LexicalNode>> = [
   HeadingNode,
@@ -22,6 +23,7 @@ const EditorNodes: Array<Klass<LexicalNode>> = [
   PageBreakNode,
   TableNode, TableCellNode, TableRowNode,
   ImageNode,
+  FileNode,
   HashtagNode
 ]
 

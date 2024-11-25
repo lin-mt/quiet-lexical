@@ -28,6 +28,7 @@ import {AutoFocusPlugin} from "@lexical/react/LexicalAutoFocusPlugin";
 import {MaxLengthPlugin} from "../../plugins/MaxLengthPlugin";
 import DraggableBlockPlugin from "../../plugins/DraggableBlockPlugin";
 import ImagesPlugin from "../../plugins/ImagesPlugin";
+import FilePlugin from "../../plugins/FilePlugin";
 
 type EditorProps = {
   placeholder?: string;
@@ -136,6 +137,7 @@ export default function Editor({
       <LexicalAutoLinkPlugin/>
       <TabIndentationPlugin/>
       <ImagesPlugin/>
+      <FilePlugin/>
       <ListMaxIndentLevelPlugin/>
     </div>
   );
