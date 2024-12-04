@@ -33,13 +33,13 @@ export function UploadLocalFileModal({
     setUploading(true);
     uploadFile(fileList).then((respUrls) => {
       setFileList([]);
-      respUrls.forEach((href) => {
+      respUrls.forEach((href, index) => {
         form.validateFields()
           .then(values => {
             activeEditor.dispatchCommand(
               INSERT_FILE_COMMAND,
               {
-                ...values,
+                fileName: respUrls.length > 1 ? `${index + 1}_${values.fileName}` : values.fileName,
                 href,
               }
             );

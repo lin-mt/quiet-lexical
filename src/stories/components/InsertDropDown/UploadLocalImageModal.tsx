@@ -33,13 +33,15 @@ export function UploadLocalImageModal({
     setUploading(true);
     uploadFile(fileList).then((respUrls) => {
       setFileList([]);
-      respUrls.forEach((src) => {
+      respUrls.forEach((src, index) => {
         form.validateFields()
           .then(values => {
+            const text = respUrls.length > 1 ? `${index + 1}_${values.caption}` : values.caption;
             activeEditor.dispatchCommand(
               INSERT_IMAGE_COMMAND,
               {
-                ...values,
+                altText: text,
+                caption: text,
                 src,
                 showCaption: !!values.caption,
               }
