@@ -2,6 +2,8 @@ import {Button, Dropdown, UploadFile} from "antd";
 import {
   ChevronDown,
   File,
+  FilePlus,
+  FileUp,
   Image,
   ImagePlus,
   ImageUp,
@@ -19,18 +21,21 @@ import {useState} from "react";
 import InsertTableModal from "./InsertTableModal.tsx";
 import {InsertOnlineImageModal} from "./InsertImageModal.tsx";
 import {UploadLocalImageModal} from "./UploadLocalImageModal.tsx";
-import {INSERT_FILE_COMMAND} from "../../plugins/FilePlugin";
+import {InsertOnlineFileModal} from "./InsertFileModal.tsx";
+import {UploadLocalFileModal} from "./UploadLocalFileModal.tsx";
 
 type InsertDropDownProps = {
   activeEditor: LexicalEditor;
-  uploadImage?: (image: UploadFile[]) => Promise<string[]>;
+  uploadFile?: (file: UploadFile[]) => Promise<string[]>;
 }
 
-export default function InsertDropDown({activeEditor, uploadImage}: InsertDropDownProps) {
+export default function InsertDropDown({activeEditor, uploadFile}: InsertDropDownProps) {
 
   const [tableModelOpen, setTableModelOpen] = useState<boolean>(false);
-  const [insertOnlineModelOpen, setInsertOnlineModelOpen] = useState<boolean>(false);
+  const [insertOnlineImageModelOpen, setInsertOnlineImageModelOpen] = useState<boolean>(false);
+  const [insertOnlineFileModelOpen, setInsertOnlineFileModelOpen] = useState<boolean>(false);
   const [uploadLocalImageModelOpen, setUploadLocalImageModelOpen] = useState<boolean>(false);
+  const [uploadLocalFileModelOpen, setUploadLocalFileModelOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -67,16 +72,16 @@ export default function InsertDropDown({activeEditor, uploadImage}: InsertDropDo
             label: '图片',
             children: [
               {
-                key: 'online',
+                key: 'onlineImage',
                 icon: <ImagePlus/>,
                 label: '在线图片',
-                onClick: () => setInsertOnlineModelOpen(true)
+                onClick: () => setInsertOnlineImageModelOpen(true)
               },
               {
-                key: 'local',
+                key: 'localImage',
                 icon: <ImageUp/>,
                 label: '本地图片',
-                disabled: !uploadImage,
+                disabled: !uploadFile,
                 onClick: () => setUploadLocalImageModelOpen(true)
               }
             ]
@@ -84,15 +89,21 @@ export default function InsertDropDown({activeEditor, uploadImage}: InsertDropDo
             key: 'file',
             icon: <File/>,
             label: '文件',
-            onClick: () => {
-              activeEditor.dispatchCommand(
-                INSERT_FILE_COMMAND,
-                {
-                  href: 'https://images.pexels.com/photos/28821822/pexels-photo-28821822.jpeg',
-                  fileName: '风景图片文件',
-                }
-              );
-            }
+            children: [
+              {
+                key: 'onlineFile',
+                icon: <FilePlus/>,
+                label: '线上文件',
+                onClick: () => setInsertOnlineFileModelOpen(true)
+              },
+              {
+                key: 'localFile',
+                icon: <FileUp/>,
+                label: '本地文件',
+                disabled: !uploadFile,
+                onClick: () => setUploadLocalFileModelOpen(true)
+              }
+            ]
           }, {
             key: 'equation',
             icon: <Sigma/>,
@@ -116,16 +127,29 @@ export default function InsertDropDown({activeEditor, uploadImage}: InsertDropDo
       />
       <InsertOnlineImageModal
         activeEditor={activeEditor}
-        visible={insertOnlineModelOpen}
-        onCancel={() => setInsertOnlineModelOpen(false)}
-        onOk={() => setInsertOnlineModelOpen(false)}
+        visible={insertOnlineImageModelOpen}
+        onCancel={() => setInsertOnlineImageModelOpen(false)}
+        onOk={() => setInsertOnlineImageModelOpen(false)}
       />
-      {uploadImage && <UploadLocalImageModal
+      <InsertOnlineFileModal
+        activeEditor={activeEditor}
+        visible={insertOnlineFileModelOpen}
+        onCancel={() => setInsertOnlineFileModelOpen(false)}
+        onOk={() => setInsertOnlineFileModelOpen(false)}
+      />
+      {uploadFile && <UploadLocalImageModal
         activeEditor={activeEditor}
         visible={uploadLocalImageModelOpen}
         onCancel={() => setUploadLocalImageModelOpen(false)}
         onOk={() => setUploadLocalImageModelOpen(false)}
-        uploadImage={uploadImage}
+        uploadFile={uploadFile}
+      />}
+      {uploadFile && <UploadLocalFileModal
+        activeEditor={activeEditor}
+        visible={uploadLocalFileModelOpen}
+        onCancel={() => setUploadLocalFileModelOpen(false)}
+        onOk={() => setUploadLocalFileModelOpen(false)}
+        uploadFile={uploadFile}
       />}
     </>
   )

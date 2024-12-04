@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import type {
   DOMConversionMap,
   DOMConversionOutput,
@@ -19,7 +11,6 @@ import type {
 import {$applyNodeReplacement, DecoratorNode} from 'lexical';
 import * as React from 'react';
 import {Suspense} from 'react';
-import {Button} from "antd";
 
 export interface FilePayload {
   fileName: string;
@@ -138,7 +129,9 @@ export class FileNode extends DecoratorNode<React.JSX.Element> {
   decorate(): React.JSX.Element {
     return (
       <Suspense fallback={null}>
-        <Button type={'link'}>{this.__fileName}</Button>
+        <div style={{paddingLeft: 6, paddingRight: 6}}>
+          {this.__fileName}
+        </div>
       </Suspense>
     );
   }

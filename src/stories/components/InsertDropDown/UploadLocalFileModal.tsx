@@ -1,8 +1,8 @@
 import {LexicalEditor} from "lexical";
 import {Button, Form, Input, message, Modal, Upload, UploadFile, UploadProps} from "antd";
 import {Upload as UploadIcon} from "lucide-react"
-import {INSERT_IMAGE_COMMAND} from "../../plugins/ImagesPlugin";
 import {useState} from "react";
+import {INSERT_FILE_COMMAND} from "../../plugins/FilePlugin";
 
 
 type UploadLocalImageModalProps = {
@@ -13,13 +13,13 @@ type UploadLocalImageModalProps = {
   uploadFile: (file: UploadFile[]) => Promise<string[]>;
 }
 
-export function UploadLocalImageModal({
-                                        activeEditor,
-                                        visible,
-                                        onCancel,
-                                        onOk,
-                                        uploadFile
-                                      }: UploadLocalImageModalProps) {
+export function UploadLocalFileModal({
+                                       activeEditor,
+                                       visible,
+                                       onCancel,
+                                       onOk,
+                                       uploadFile
+                                     }: UploadLocalImageModalProps) {
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -27,21 +27,20 @@ export function UploadLocalImageModal({
 
   const handleUpload = () => {
     if (fileList.length < 1) {
-      messageApi.warning("请选择上传的图片文件");
+      messageApi.warning("请选择上传的文件");
       return;
     }
     setUploading(true);
     uploadFile(fileList).then((respUrls) => {
       setFileList([]);
-      respUrls.forEach((src) => {
+      respUrls.forEach((href) => {
         form.validateFields()
           .then(values => {
             activeEditor.dispatchCommand(
-              INSERT_IMAGE_COMMAND,
+              INSERT_FILE_COMMAND,
               {
                 ...values,
-                src,
-                showCaption: !!values.caption,
+                href,
               }
             );
             onOk();
@@ -71,7 +70,7 @@ export function UploadLocalImageModal({
       {contextHolder}
       <Modal
         centered={true}
-        title={"上传本地图片"}
+        title={"上传本地文件"}
         open={visible}
         width={500}
         afterClose={() => form.resetFields()}
@@ -81,7 +80,7 @@ export function UploadLocalImageModal({
       >
         <Form
           form={form}
-          name="insertOnlineImage"
+          name="insertLocalFile"
           labelCol={{span: 5}}
         >
           <Form.Item
@@ -92,10 +91,11 @@ export function UploadLocalImageModal({
             </Upload>
           </Form.Item>
           <Form.Item
-            label={'图片说明'}
-            name="caption"
+            label={'文件名'}
+            name="fileName"
+            rules={[{required: true, message: '请输入文件名'}]}
           >
-            <Input placeholder="请输入图片说明"/>
+            <Input placeholder="请输入文件名"/>
           </Form.Item>
         </Form>
       </Modal>

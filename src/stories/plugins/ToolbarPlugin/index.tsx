@@ -47,7 +47,7 @@ type ToolbarPluginProps = {
   activeEditor: LexicalEditor;
   setActiveEditor: Dispatch<LexicalEditor>;
   setIsLinkEditMode: Dispatch<boolean>;
-  uploadImage?: (image: UploadFile[]) => Promise<string[]>;
+  uploadFile?: (file: UploadFile[]) => Promise<string[]>;
 }
 
 type Presets = Required<ColorPickerProps>['presets'][number];
@@ -63,7 +63,7 @@ export default function ToolbarPlugin({
                                         activeEditor,
                                         setActiveEditor,
                                         setIsLinkEditMode,
-                                        uploadImage
+                                        uploadFile
                                       }: ToolbarPluginProps) {
 
   const {token} = theme.useToken();
@@ -435,7 +435,7 @@ export default function ToolbarPlugin({
           {canViewerSeeInsertDropdown &&
             <>
               <ToolbarDivider/>
-              <InsertDropDown activeEditor={activeEditor} uploadImage={uploadImage}/>
+              <InsertDropDown activeEditor={activeEditor} uploadFile={uploadFile}/>
             </>
           }
         </>

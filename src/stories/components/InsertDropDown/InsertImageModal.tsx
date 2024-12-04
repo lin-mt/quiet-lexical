@@ -3,21 +3,21 @@ import {Form, Input, Modal} from "antd";
 import {INSERT_IMAGE_COMMAND} from "../../plugins/ImagesPlugin";
 
 
-type InsertTableModalProps = {
+type InsertOnlineImageModalProps = {
   activeEditor: LexicalEditor;
   visible: boolean;
   onCancel: () => void;
   onOk: () => void;
 }
 
-export function InsertOnlineImageModal({activeEditor, visible, onCancel, onOk}: InsertTableModalProps) {
+export function InsertOnlineImageModal({activeEditor, visible, onCancel, onOk}: InsertOnlineImageModalProps) {
 
   const [form] = Form.useForm();
 
   return (
     <Modal
       centered={true}
-      title={"插入在线图片"}
+      title={"插入线上图片"}
       open={visible}
       width={500}
       afterClose={() => form.resetFields()}
@@ -39,7 +39,6 @@ export function InsertOnlineImageModal({activeEditor, visible, onCancel, onOk}: 
       <Form
         form={form}
         name="insertOnlineImage"
-        style={{marginTop: 20}}
         labelCol={{span: 5}}
       >
         <Form.Item

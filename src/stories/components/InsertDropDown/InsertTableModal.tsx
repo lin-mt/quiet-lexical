@@ -36,7 +36,6 @@ export default function InsertTableModal({activeEditor, visible, onCancel, onOk}
       <Form
         form={form}
         name="insertTable"
-        style={{marginTop: 30}}
         initialValues={{rows: 6, columns: 6}}
       >
         <Form.Item

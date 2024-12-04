@@ -33,13 +33,13 @@ import FilePlugin from "../../plugins/FilePlugin";
 type EditorProps = {
   placeholder?: string;
   maxLength?: number;
-  uploadImage?: (image: UploadFile[]) => Promise<string[]>;
+  uploadFile?: (file: UploadFile[]) => Promise<string[]>;
 }
 
 export default function Editor({
                                  placeholder = '请输入内容...',
                                  maxLength,
-                                 uploadImage
+                                 uploadFile
                                }: EditorProps): React.JSX.Element {
 
   const {token} = theme.useToken()
@@ -87,7 +87,7 @@ export default function Editor({
         activeEditor={activeEditor}
         setActiveEditor={setActiveEditor}
         setIsLinkEditMode={setIsLinkEditMode}
-        uploadImage={uploadImage}
+        uploadFile={uploadFile}
       />
       <RichTextPlugin
         contentEditable={
